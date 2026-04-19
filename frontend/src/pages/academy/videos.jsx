@@ -22,28 +22,28 @@ const fadeUp = (delay = 0) => ({
 const videos = [
   {
     src: "/videos/ada-2026.mp4",
-    poster: "/thumbnails/ada-2026.jpg",
+    poster: "/images/thumbnails/ada-2026.webp",
     title: "ADA Growing and Changing Lives in 2026",
     description: "Overview of ADA's impact on students and families and the foundation's fundraising efforts throughout the year.",
     tag: "2026",
   },
   {
     src: "/videos/stories.mp4",
-    poster: "/thumbnails/stories.jpg",
+    poster: "/images/thumbnails/stories.webp",
     title: "Stories from the African Dream Academy",
     description: "In April 2024, Lydia Spinelli, ADAF Board President visited the school in Liberia along with a group of supporters. Listen to Sophia Pedrazzi, a high school senior, as she describes her amazing experience with the students and teachers.",
     tag: "2024",
   },
   {
     src: "/videos/history.mp4",
-    poster: "/thumbnails/history.jpg",
+    poster: "/images/thumbnails/history.webp",
     title: "African Dream Academy: Then to Now and Beyond",
     description: "Over ten years have passed since African Dream Academy opened its doors to 144 children in September 2012. Watch the story of its beginning and how far it has come.",
     tag: "History",
   },
   {
     src: "/videos/campus.mp4",
-    poster: "/thumbnails/campus.jpg",
+    poster: "/images/thumbnails/campus.webp",
     title: "A 2021 Bird's-Eye View of the New ADA Campus",
     description: "We hired a Liberian filmmaker to make a 3-minute video, so that you can see up close how your gifts are changing the lives of our ADA children and their families.",
     tag: "Campus",
