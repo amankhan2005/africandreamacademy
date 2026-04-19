@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useRef } from "react";
 
 const P = {
   crimson:  "#8B1A1A",
@@ -21,29 +22,232 @@ const fadeUp = (delay = 0) => ({
 const videos = [
   {
     src: "/videos/ada-2026.mp4",
+    poster: "/thumbnails/ada-2026.jpg",
     title: "ADA Growing and Changing Lives in 2026",
     description: "Overview of ADA's impact on students and families and the foundation's fundraising efforts throughout the year.",
     tag: "2026",
   },
   {
     src: "/videos/stories.mp4",
+    poster: "/thumbnails/stories.jpg",
     title: "Stories from the African Dream Academy",
     description: "In April 2024, Lydia Spinelli, ADAF Board President visited the school in Liberia along with a group of supporters. Listen to Sophia Pedrazzi, a high school senior, as she describes her amazing experience with the students and teachers.",
     tag: "2024",
   },
   {
     src: "/videos/history.mp4",
+    poster: "/thumbnails/history.jpg",
     title: "African Dream Academy: Then to Now and Beyond",
     description: "Over ten years have passed since African Dream Academy opened its doors to 144 children in September 2012. Watch the story of its beginning and how far it has come.",
     tag: "History",
   },
   {
     src: "/videos/campus.mp4",
+    poster: "/thumbnails/campus.jpg",
     title: "A 2021 Bird's-Eye View of the New ADA Campus",
     description: "We hired a Liberian filmmaker to make a 3-minute video, so that you can see up close how your gifts are changing the lives of our ADA children and their families.",
     tag: "Campus",
   },
 ];
+
+function VideoCard({ v, i, accentColor }) {
+  const videoRef = useRef(null);
+  const overlayRef = useRef(null);
+
+  const handleToggle = () => {
+    const vid = videoRef.current;
+    const overlay = overlayRef.current;
+    if (!vid || !overlay) return;
+    if (vid.paused) {
+      vid.play();
+      overlay.style.opacity = "0";
+      overlay.style.pointerEvents = "none";
+    } else {
+      vid.pause();
+      overlay.style.opacity = "1";
+      overlay.style.pointerEvents = "auto";
+    }
+  };
+
+  const handleVideoEnded = () => {
+    if (overlayRef.current) {
+      overlayRef.current.style.opacity = "1";
+      overlayRef.current.style.pointerEvents = "auto";
+    }
+  };
+
+  return (
+    <motion.div
+      {...fadeUp(i * 0.08)}
+      className="vid-card"
+      style={{
+        background: "#fff",
+        border: `1px solid rgba(139,26,26,0.1)`,
+        borderRadius: "2px",
+        overflow: "hidden",
+        boxShadow: "0 2px 20px rgba(26,10,0,0.07)",
+        position: "relative",
+      }}
+    >
+      {/* Video wrapper */}
+      <div
+        style={{ position: "relative", background: P.ink, cursor: "pointer" }}
+        onClick={handleToggle}
+      >
+        <video
+          ref={videoRef}
+          poster={v.poster}
+          onEnded={handleVideoEnded}
+          style={{
+            width: "100%",
+            height: "260px",
+            objectFit: "cover",
+            display: "block",
+          }}
+        >
+          <source src={v.src} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+
+        {/* Play button overlay */}
+        <div
+          ref={overlayRef}
+          style={{
+            position: "absolute",
+            inset: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "rgba(26,10,0,0.28)",
+            transition: "opacity 0.25s ease",
+            opacity: 1,
+          }}
+        >
+          <div
+            style={{
+              width: "58px",
+              height: "58px",
+              borderRadius: "50%",
+              background: "rgba(240,180,41,0.92)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 4px 24px rgba(0,0,0,0.4)",
+              transition: "transform 0.2s ease, box-shadow 0.2s ease",
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.transform = "scale(1.1)";
+              e.currentTarget.style.boxShadow = "0 6px 32px rgba(0,0,0,0.5)";
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.transform = "scale(1)";
+              e.currentTarget.style.boxShadow = "0 4px 24px rgba(0,0,0,0.4)";
+            }}
+          >
+            {/* Triangle play icon */}
+            <div
+              style={{
+                width: 0,
+                height: 0,
+                borderTop: "10px solid transparent",
+                borderBottom: "10px solid transparent",
+                borderLeft: `18px solid ${P.ink}`,
+                marginLeft: "4px",
+              }}
+            />
+          </div>
+        </div>
+
+        {/* Tag badge */}
+        <div
+          style={{
+            position: "absolute",
+            top: "14px",
+            left: "14px",
+            padding: "4px 12px",
+            background: "rgba(26,10,0,0.72)",
+            border: `1px solid ${accentColor}`,
+            borderRadius: "2px",
+            fontSize: "10px",
+            fontWeight: 700,
+            letterSpacing: "2px",
+            textTransform: "uppercase",
+            color: accentColor,
+            pointerEvents: "none",
+          }}
+        >
+          {v.tag}
+        </div>
+      </div>
+
+      {/* Text */}
+      <div style={{ padding: "24px 28px 28px", position: "relative" }}>
+        {/* Accent line */}
+        <div
+          style={{
+            width: "32px",
+            height: "3px",
+            borderRadius: "2px",
+            background: `linear-gradient(to right, ${accentColor}, ${P.gold})`,
+            marginBottom: "14px",
+          }}
+        />
+
+        <h3
+          style={{
+            fontSize: "1rem",
+            fontWeight: 800,
+            color: P.ink,
+            margin: "0 0 10px",
+            lineHeight: 1.35,
+            letterSpacing: "-0.01em",
+          }}
+        >
+          {v.title}
+        </h3>
+
+        <p
+          style={{
+            fontSize: "0.875rem",
+            color: "rgba(26,10,0,0.55)",
+            lineHeight: 1.8,
+            margin: 0,
+          }}
+        >
+          {v.description}
+        </p>
+
+        {/* Bottom hover bar */}
+        <div
+          className="vid-card-bar"
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: "3px",
+            background: `linear-gradient(to right, ${accentColor}, ${P.gold})`,
+            transform: "scaleX(0)",
+            transformOrigin: "left",
+            transition: "transform 0.3s ease",
+          }}
+        />
+      </div>
+
+      {/* Left accent border */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          bottom: 0,
+          width: "3px",
+          background: accentColor,
+        }}
+      />
+    </motion.div>
+  );
+}
 
 export default function Videos() {
   return (
@@ -169,93 +373,7 @@ export default function Videos() {
             {videos.map((v, i) => {
               const accentColor = i % 3 === 0 ? P.crimson : i % 3 === 1 ? P.amber : P.gold;
               return (
-                <motion.div
-                  key={i}
-                  {...fadeUp(i * 0.08)}
-                  className="vid-card"
-                  style={{
-                    background: "#fff",
-                    border: `1px solid rgba(139,26,26,0.1)`,
-                    borderRadius: "2px",
-                    overflow: "hidden",
-                    boxShadow: "0 2px 20px rgba(26,10,0,0.07)",
-                    position: "relative",
-                  }}
-                >
-                  {/* Video */}
-                  <div style={{ position: "relative", background: P.ink }}>
-                    <video
-                      controls
-                      style={{
-                        width: "100%",
-                        height: "260px",
-                        objectFit: "cover",
-                        display: "block",
-                      }}
-                    >
-                      <source src={v.src} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
-
-                    {/* Tag badge */}
-                    <div style={{
-                      position: "absolute", top: "14px", left: "14px",
-                      padding: "4px 12px",
-                      background: "rgba(26,10,0,0.72)",
-                      border: `1px solid ${accentColor}`,
-                      borderRadius: "2px",
-                      fontSize: "10px", fontWeight: 700,
-                      letterSpacing: "2px", textTransform: "uppercase",
-                      color: accentColor,
-                      pointerEvents: "none",
-                    }}>
-                      {v.tag}
-                    </div>
-                  </div>
-
-                  {/* Text */}
-                  <div style={{ padding: "24px 28px 28px", position: "relative" }}>
-                    {/* Accent line */}
-                    <div style={{
-                      width: "32px", height: "3px", borderRadius: "2px",
-                      background: `linear-gradient(to right, ${accentColor}, ${P.gold})`,
-                      marginBottom: "14px",
-                    }} />
-
-                    <h3 style={{
-                      fontSize: "1rem", fontWeight: 800,
-                      color: P.ink, margin: "0 0 10px",
-                      lineHeight: 1.35, letterSpacing: "-0.01em",
-                    }}>
-                      {v.title}
-                    </h3>
-
-                    <p style={{
-                      fontSize: "0.875rem", color: "rgba(26,10,0,0.55)",
-                      lineHeight: 1.8, margin: 0,
-                    }}>
-                      {v.description}
-                    </p>
-
-                    {/* Bottom hover bar */}
-                    <div
-                      className="vid-card-bar"
-                      style={{
-                        position: "absolute", bottom: 0, left: 0, right: 0, height: "3px",
-                        background: `linear-gradient(to right, ${accentColor}, ${P.gold})`,
-                        transform: "scaleX(0)",
-                        transformOrigin: "left",
-                        transition: "transform 0.3s ease",
-                      }}
-                    />
-                  </div>
-
-                  {/* Left accent border */}
-                  <div style={{
-                    position: "absolute", top: 0, left: 0, bottom: 0, width: "3px",
-                    background: accentColor,
-                  }} />
-                </motion.div>
+                <VideoCard key={i} v={v} i={i} accentColor={accentColor} />
               );
             })}
           </div>

@@ -152,7 +152,7 @@ export default function BlogDetail() {
             {blog.title}
           </motion.h1>
 
-          {/* Full-bleed image */}
+          {/* Full-bleed image — increased height */}
           <motion.div
             {...fadeUp(0.18)}
             style={{
@@ -164,7 +164,7 @@ export default function BlogDetail() {
               src={blog.image}
               alt={blog.title}
               style={{
-                width: "100%", height: "clamp(220px, 40vw, 420px)",
+                width: "100%", height: "clamp(320px, 55vw, 600px)",
                 objectFit: "cover", display: "block",
               }}
             />

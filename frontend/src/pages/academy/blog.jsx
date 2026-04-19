@@ -26,11 +26,36 @@ export default function Blog() {
 
       <style>{`
         .blog-hero-inner { padding: 120px 2rem 96px; }
+
         .blog-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
           gap: 24px;
+          align-items: stretch;
         }
+
+        /* Motion wrapper and Link must be full height */
+        .blog-grid > div { height: 100%; }
+        .blog-grid > div > a { display: block; height: 100%; }
+
+        .blog-card {
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+        }
+
+        /* Text section grows to fill remaining card space */
+        .blog-card-body {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          padding: 20px 22px 24px;
+          position: relative;
+        }
+
+        /* Title takes available space, pushing read-more to bottom */
+        .blog-card-title-wrap { flex: 1; }
+
         .blog-card-img { transition: transform 0.45s ease; }
         .blog-card:hover .blog-card-img { transform: scale(1.05); }
         .blog-card:hover .blog-card-bar { transform: scaleX(1); }
@@ -164,15 +189,17 @@ export default function Blog() {
                         cursor: "pointer",
                       }}
                     >
-                      {/* Image */}
-                      <div style={{ overflow: "hidden", position: "relative" }}>
+                      {/* Image — fixed height, always cropped consistently */}
+                      <div style={{ overflow: "hidden", position: "relative", flexShrink: 0 }}>
                         <img
                           src={blog.image}
                           alt={blog.title}
                           className="blog-card-img"
                           style={{
-                            width: "100%", height: "200px",
-                            objectFit: "cover", display: "block",
+                            width: "100%",
+                            height: "200px",
+                            objectFit: "cover",
+                            display: "block",
                           }}
                         />
                         {/* Date badge */}
@@ -190,33 +217,38 @@ export default function Blog() {
                         </div>
                       </div>
 
-                      {/* Text */}
-                      <div style={{ padding: "20px 22px 24px", position: "relative" }}>
+                      {/* Text body — flex column, grows to fill card */}
+                      <div className="blog-card-body">
                         <div style={{
                           width: "28px", height: "3px", borderRadius: "2px",
                           background: `linear-gradient(to right, ${accentColor}, ${P.gold})`,
                           marginBottom: "12px",
+                          flexShrink: 0,
                         }} />
 
-                        <h3
-                          className="blog-card-title"
-                          style={{
-                            fontSize: "0.95rem", fontWeight: 800,
-                            color: P.ink, margin: 0,
-                            lineHeight: 1.4, letterSpacing: "-0.01em",
-                            transition: "color 0.2s ease",
-                          }}
-                        >
-                          {blog.title}
-                        </h3>
+                        {/* Title wrapper fills space so read-more is always at bottom */}
+                        <div className="blog-card-title-wrap">
+                          <h3
+                            className="blog-card-title"
+                            style={{
+                              fontSize: "0.95rem", fontWeight: 800,
+                              color: P.ink, margin: 0,
+                              lineHeight: 1.4, letterSpacing: "-0.01em",
+                              transition: "color 0.2s ease",
+                            }}
+                          >
+                            {blog.title}
+                          </h3>
+                        </div>
 
-                        {/* Read more */}
+                        {/* Read more — always pinned to bottom */}
                         <div style={{
                           display: "flex", alignItems: "center", gap: "6px",
                           marginTop: "14px",
                           fontSize: "11px", fontWeight: 700,
                           letterSpacing: "1.5px", textTransform: "uppercase",
                           color: accentColor,
+                          flexShrink: 0,
                         }}>
                           Read more
                           <span style={{ fontSize: "14px", lineHeight: 1 }}>→</span>

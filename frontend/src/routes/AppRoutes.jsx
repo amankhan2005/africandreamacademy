@@ -1,10 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
+import RouteScrollTop from "../components/RouteScrollTop"; 
 
 /* Pages */
 import Home from "../pages/Home";
 import NotFound from "../pages/NotFound";
- import YouthAmbassador from "../pages/YouthAmbassador";
+import YouthAmbassador from "../pages/YouthAmbassador";
 
 /* Academy Pages */
 import About from "../pages/academy/about";
@@ -13,6 +14,7 @@ import Liberia from "../pages/academy/liberia";
 import Videos from "../pages/academy/videos";
 import Blog from "../pages/academy/blog";
 import BlogDetail from "../pages/academy/BlogDetail";
+
 /* Foundation Pages */
 import Founder from "../pages/foundation/founder";
 import Mission from "../pages/foundation/mission";
@@ -28,12 +30,12 @@ export default function AppRoutes() {
         v7_relativeSplatPath: true,
       }}
     >
+       <RouteScrollTop />
+
       <Routes>
 
-        {/* Layout wrapper */}
         <Route element={<MainLayout />}>
 
-          {/* Home */}
           <Route path="/" element={<Home />} />
 
           {/* Academy */}
@@ -54,7 +56,6 @@ export default function AppRoutes() {
 
         </Route>
 
-        {/* 404 page */}
         <Route path="*" element={<NotFound />} />
 
       </Routes>

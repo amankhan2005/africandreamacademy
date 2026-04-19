@@ -285,7 +285,7 @@ export default function ImpactSection() {
         <motion.div
           style={{ display: "flex", gap: "14px" }}
           animate={{ x: ["0%", "-50%"] }}
-          transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
+          transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
         >
           {[...Array(2)].map((_, di) => (
             <div key={di} style={{ display: "flex", gap: "14px", flexShrink: 0 }}>

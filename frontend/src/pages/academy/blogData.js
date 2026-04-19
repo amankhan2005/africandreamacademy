@@ -3,7 +3,7 @@ export const blogs = [
     slug: "martin-luther-king-program-2026",
     title: "Martin Luther King Jr. Program 2026",
     date: "April 9, 2026",
-    image: "/images/blog/1.jpg",
+    image: "/images/blog/1.webp",
     content: `The event was organized by Mrs. Esther P. Tobayas, the school’s Career Counselor, along with Miss Love. According to the organizers, the program was held to remember Dr. King’s contributions to justice, equality, and civil rights—achievements from which students and citizens continue to benefit today. The program was hosted by student Emmett T. Mason of Grade 12-B and focused on Dr. King’s leadership and enduring legacy.`
   },
 
@@ -11,7 +11,7 @@ export const blogs = [
     slug: "student-council-election-2026",
     title: "2026 Student Council Government Election",
     date: "April 9, 2026",
-    image: "/images/blog/2.jpg",
+    image: "/images/blog/2.webp",
     content: `The Annex II campus of African Dream Academy conducted its Student Council Government election on Monday, December 15, 2025, with hundreds of students turning out to vote.
 
 Students lined up patiently across the campus to exercise their civic responsibility, casting ballots for their preferred student leaders. The election was marked by orderliness and active participation from the student body.
@@ -27,7 +27,7 @@ In her remarks following the announcement, Passaway described the electoral proc
     slug: "career-day-program",
     title: "African Dream Academy Celebrates Twelfth Career Day Program",
     date: "June 11, 2024",
-    image: "/images/blog/3.jpg",
+    image: "/images/blog/3.webp",
     content: `The African Dream Academy celebrated it's twelfth career day program. The program was meant to encourage and educate students on choosing a career path based on their passion and academic potential.
 
 Career day is celebrated every year as part of the school's custom. The guest speaker for this year’s career day celebration, Dr. Dike Fehlix, spoke on the topic: Career Choices for Students at Higher Institutions.
@@ -58,7 +58,7 @@ Raphael Kamma, Jr.`
     slug: "inaugural-ball",
     title: "African Dream Academy’s Inaugural Ball",
     date: "May 12, 2024",
-    image: "/images/blog/4.jpg",
+    image: "/images/blog/4.webp",
     content: `The Student Council Government of the African Dream Academy hosted its inaugural ball on Friday, March 29, 2024.
 
 The inaugural ball, which took place at Annex 1, was a spectacular event that brought together students, faculty, staff, and special guests.
