@@ -44,6 +44,54 @@ export default function SocialSection() {
         overflow: "hidden",
       }}
     >
+      {/* ── Responsive styles ── */}
+      <style>{`
+        .ss-outer {
+          padding: 96px 2rem;
+        }
+        .ss-grid {
+          max-width: 80rem;
+          width: 100%;
+          margin: 0 auto;
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 80px;
+          align-items: center;
+        }
+        .ss-img {
+          height: 560px;
+        }
+        .ss-frame {
+          top: 14px;
+          right: -14px;
+        }
+        .ss-body {
+          max-width: 440px;
+        }
+        @media (max-width: 768px) {
+          .ss-outer {
+            padding: 64px 20px;
+          }
+          .ss-grid {
+            grid-template-columns: 1fr;
+            gap: 48px;
+          }
+          .ss-img {
+            height: 320px;
+          }
+          .ss-frame {
+            top: 10px;
+            right: -10px;
+          }
+          .ss-image-col {
+            order: -1;
+          }
+          .ss-body {
+            max-width: 100%;
+          }
+        }
+      `}</style>
+
       {/* ── Texture orbs ── */}
       <div style={{
         position: "absolute", top: "-160px", left: "-160px",
@@ -59,18 +107,10 @@ export default function SocialSection() {
       }} />
 
       {/* ── Outer padding wrapper ── */}
-      <div style={{ padding: "96px 2rem" }}>
+      <div className="ss-outer">
 
         {/* ── Max-width container ── */}
-        <div style={{
-          maxWidth: "80rem",
-          width: "100%",
-          margin: "0 auto",
-          display: "grid",
-          gridTemplateColumns: "repeat(2, 1fr)",
-          gap: "80px",
-          alignItems: "center",
-        }}>
+        <div className="ss-grid">
 
           {/* ── CONTENT SIDE ── */}
           <motion.div
@@ -145,12 +185,12 @@ export default function SocialSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
+              className="ss-body"
               style={{
                 color: "rgba(26,10,0,0.55)",
                 fontSize: "clamp(0.95rem, 1.3vw, 1.05rem)",
                 lineHeight: 1.85,
                 fontWeight: 400,
-                maxWidth: "440px",
                 margin: "0 0 36px 0",
               }}
             >
@@ -207,6 +247,7 @@ export default function SocialSection() {
 
           {/* ── IMAGE SIDE ── */}
           <motion.div
+            className="ss-image-col"
             initial={{ opacity: 0, x: 36 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -214,14 +255,16 @@ export default function SocialSection() {
             style={{ position: "relative" }}
           >
             {/* Gold frame offset */}
-            <div style={{
-              position: "absolute",
-              top: "14px", right: "-14px",
-              width: "100%", height: "100%",
-              border: `2px solid rgba(232,146,10,0.2)`,
-              borderRadius: "2px",
-              zIndex: 0,
-            }} />
+            <div
+              className="ss-frame"
+              style={{
+                position: "absolute",
+                width: "100%", height: "100%",
+                border: `2px solid rgba(232,146,10,0.2)`,
+                borderRadius: "2px",
+                zIndex: 0,
+              }}
+            />
 
             <div style={{
               position: "relative",
@@ -233,8 +276,9 @@ export default function SocialSection() {
               <img
                 src="/images/home/social.png"
                 alt="Social"
+                className="ss-img"
                 style={{
-                  width: "100%", height: "560px",
+                  width: "100%",
                   objectFit: "cover", display: "block",
                   transition: "transform 0.5s ease",
                 }}

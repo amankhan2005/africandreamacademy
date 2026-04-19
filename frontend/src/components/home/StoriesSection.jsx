@@ -24,6 +24,59 @@ export default function StoriesSection() {
         overflow: "hidden",
       }}
     >
+      {/* ── Responsive styles ── */}
+      <style>{`
+        .st-grid {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 96px 40px;
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+          gap: 72px;
+          align-items: center;
+        }
+        .st-img {
+          height: 400px;
+        }
+        .st-frame {
+          top: 14px;
+          right: -14px;
+        }
+        .st-body {
+          max-width: 440px;
+        }
+        .st-video {
+          width: 90%;
+          max-width: 900px;
+          height: 500px;
+        }
+        @media (max-width: 768px) {
+          .st-grid {
+            grid-template-columns: 1fr;
+            padding: 64px 20px;
+            gap: 48px;
+          }
+          .st-img {
+            height: 260px;
+          }
+          .st-frame {
+            top: 10px;
+            right: -10px;
+          }
+          .st-thumb-col {
+            order: -1;
+          }
+          .st-body {
+            max-width: 100%;
+          }
+          .st-video {
+            width: 95%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+          }
+        }
+      `}</style>
+
       {/* ── Texture orbs ── */}
       <div style={{
         position: "absolute", top: "-160px", left: "-160px",
@@ -39,15 +92,7 @@ export default function StoriesSection() {
       }} />
 
       {/* ── Main grid ── */}
-      <div style={{
-        maxWidth: "1200px",
-        margin: "0 auto",
-        padding: "96px 40px",
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-        gap: "72px",
-        alignItems: "center",
-      }}>
+      <div className="st-grid">
 
         {/* ── TEXT SIDE ── */}
         <motion.div
@@ -56,7 +101,6 @@ export default function StoriesSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: "easeOut" }}
         >
-
           {/* Eyebrow */}
           <motion.div
             initial={{ opacity: 0, x: -12 }}
@@ -121,12 +165,12 @@ export default function StoriesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.3 }}
+            className="st-body"
             style={{
               color: "rgba(26,10,0,0.55)",
               fontSize: "clamp(0.95rem, 1.5vw, 1.05rem)",
               lineHeight: 1.85,
               fontWeight: 400,
-              maxWidth: "440px",
               marginBottom: "36px",
             }}
           >
@@ -191,7 +235,6 @@ export default function StoriesSection() {
             onMouseEnter={e => { e.currentTarget.style.background = P.crimsonD; }}
             onMouseLeave={e => { e.currentTarget.style.background = P.crimson; }}
           >
-            {/* Play icon */}
             <span style={{
               width: "26px", height: "26px",
               borderRadius: "50%",
@@ -203,11 +246,11 @@ export default function StoriesSection() {
             </span>
             Watch Stories
           </motion.button>
-
         </motion.div>
 
         {/* ── VIDEO THUMBNAIL SIDE ── */}
         <motion.div
+          className="st-thumb-col"
           initial={{ opacity: 0, x: 32 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -215,14 +258,16 @@ export default function StoriesSection() {
           style={{ position: "relative" }}
         >
           {/* Gold frame offset */}
-          <div style={{
-            position: "absolute",
-            top: "14px", right: "-14px",
-            width: "100%", height: "100%",
-            border: `2px solid rgba(240,180,41,0.25)`,
-            borderRadius: "2px",
-            zIndex: 0,
-          }} />
+          <div
+            className="st-frame"
+            style={{
+              position: "absolute",
+              width: "100%", height: "100%",
+              border: `2px solid rgba(240,180,41,0.25)`,
+              borderRadius: "2px",
+              zIndex: 0,
+            }}
+          />
 
           {/* Thumbnail */}
           <div
@@ -237,8 +282,9 @@ export default function StoriesSection() {
             <img
               src="/images/home/stories.png"
               alt="Student Stories"
+              className="st-img"
               style={{
-                width: "100%", height: "400px",
+                width: "100%",
                 objectFit: "cover", display: "block",
                 transition: "transform 0.5s ease",
               }}
@@ -320,12 +366,12 @@ export default function StoriesSection() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.88, opacity: 0 }}
               transition={{ duration: 0.28 }}
+              className="st-video"
               style={{
                 position: "relative",
                 padding: "4px",
                 background: `linear-gradient(135deg, ${P.gold}, ${P.crimson})`,
                 borderRadius: "3px",
-                width: "90%", maxWidth: "900px",
               }}
             >
               <video
@@ -335,7 +381,7 @@ export default function StoriesSection() {
                 playsInline
                 poster="/images/home/stories.png"
                 style={{
-                  width: "100%", height: "500px",
+                  width: "100%", height: "100%",
                   objectFit: "cover",
                   display: "block",
                   borderRadius: "1px",

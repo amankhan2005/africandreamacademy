@@ -233,7 +233,12 @@ export default function FoundationSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.46 }}
-              style={{ display: "flex", flexWrap: "wrap", gap: "12px", alignItems: "center" }}
+              style={{
+                display: "flex",
+                flexWrap: "nowrap",
+                gap: "12px",
+                alignItems: "center",
+              }}
             >
               {/* Primary */}
               <Link
@@ -241,6 +246,7 @@ export default function FoundationSection() {
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
+                  justifyContent: "center",
                   gap: "8px",
                   padding: "13px 36px",
                   background: `linear-gradient(135deg, ${P.amber}, ${P.gold})`,
@@ -253,6 +259,8 @@ export default function FoundationSection() {
                   borderRadius: "2px",
                   boxShadow: "0 4px 24px rgba(232,146,10,0.4)",
                   transition: "opacity 0.2s ease, transform 0.2s ease",
+                  flex: "1 1 auto",
+                  minWidth: 0,
                 }}
                 onMouseEnter={e => {
                   e.currentTarget.style.opacity = "0.88";
@@ -277,6 +285,7 @@ export default function FoundationSection() {
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
+                  justifyContent: "center",
                   gap: "8px",
                   padding: "13px 36px",
                   background: "transparent",
@@ -289,6 +298,8 @@ export default function FoundationSection() {
                   borderRadius: "2px",
                   border: "1px solid rgba(255,255,255,0.25)",
                   transition: "background 0.2s ease, transform 0.2s ease",
+                  flex: "1 1 auto",
+                  minWidth: 0,
                 }}
                 onMouseEnter={e => {
                   e.currentTarget.style.background = "rgba(255,255,255,0.1)";

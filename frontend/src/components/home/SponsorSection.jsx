@@ -21,6 +21,54 @@ export default function SponsorSection() {
         overflow: "hidden",
       }}
     >
+      {/* ── Responsive styles ── */}
+      <style>{`
+        .sp-outer {
+          padding: 96px 2rem;
+        }
+        .sp-grid {
+          max-width: 80rem;
+          width: 100%;
+          margin: 0 auto;
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 80px;
+          align-items: center;
+        }
+        .sp-img {
+          height: 420px;
+        }
+        .sp-frame {
+          top: 14px;
+          left: -14px;
+        }
+        .sp-body {
+          max-width: 480px;
+        }
+        @media (max-width: 768px) {
+          .sp-outer {
+            padding: 64px 20px;
+          }
+          .sp-grid {
+            grid-template-columns: 1fr;
+            gap: 48px;
+          }
+          .sp-img {
+            height: 280px;
+          }
+          .sp-frame {
+            top: 10px;
+            left: -10px;
+          }
+          .sp-image-col {
+            order: -1;
+          }
+          .sp-body {
+            max-width: 100%;
+          }
+        }
+      `}</style>
+
       {/* ── Texture orbs ── */}
       <div style={{
         position: "absolute", top: "-180px", right: "-180px",
@@ -43,21 +91,14 @@ export default function SponsorSection() {
       }} />
 
       {/* ── Outer padding wrapper ── */}
-      <div style={{ padding: "96px 2rem" }}>
+      <div className="sp-outer">
 
         {/* ── Max-width container ── */}
-        <div style={{
-          maxWidth: "80rem",
-          width: "100%",
-          margin: "0 auto",
-          display: "grid",
-          gridTemplateColumns: "repeat(2, 1fr)",
-          gap: "80px",
-          alignItems: "center",
-        }}>
+        <div className="sp-grid">
 
           {/* ── IMAGE SIDE ── */}
           <motion.div
+            className="sp-image-col"
             initial={{ opacity: 0, x: -36 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -65,14 +106,16 @@ export default function SponsorSection() {
             style={{ position: "relative" }}
           >
             {/* Gold frame offset */}
-            <div style={{
-              position: "absolute",
-              top: "14px", left: "-14px",
-              width: "100%", height: "100%",
-              border: "2px solid rgba(240,180,41,0.25)",
-              borderRadius: "2px",
-              zIndex: 0,
-            }} />
+            <div
+              className="sp-frame"
+              style={{
+                position: "absolute",
+                width: "100%", height: "100%",
+                border: "2px solid rgba(240,180,41,0.25)",
+                borderRadius: "2px",
+                zIndex: 0,
+              }}
+            />
 
             <div style={{
               position: "relative",
@@ -84,8 +127,9 @@ export default function SponsorSection() {
               <img
                 src="/images/home/sponsor.webp"
                 alt="Sponsor a child"
+                className="sp-img"
                 style={{
-                  width: "100%", height: "420px",
+                  width: "100%",
                   objectFit: "cover", display: "block",
                   transition: "transform 0.5s ease",
                 }}
@@ -205,12 +249,12 @@ export default function SponsorSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
+              className="sp-body"
               style={{
                 color: "rgba(255,255,255,0.72)",
                 fontSize: "clamp(0.95rem, 1.3vw, 1.05rem)",
                 lineHeight: 1.85,
                 fontWeight: 400,
-                maxWidth: "480px",
                 margin: "0 0 36px 0",
               }}
             >
@@ -258,15 +302,9 @@ export default function SponsorSection() {
                 }}
               >
                 Support Us
-                <svg
-                  width="14" height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" strokeWidth="2.5"
+                  strokeLinecap="round" strokeLinejoin="round">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </Link>

@@ -22,6 +22,40 @@ export default function VideoSection() {
         overflow: "hidden",
       }}
     >
+      {/* ── Responsive styles ── */}
+      <style>{`
+        .video-grid {
+          max-width: 80rem;
+          margin: 0 auto;
+          padding: 96px 40px;
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 80px;
+          align-items: center;
+        }
+        .video-img {
+          height: 420px;
+        }
+        .video-frame {
+          top: 14px;
+          left: -14px;
+        }
+        @media (max-width: 768px) {
+          .video-grid {
+            grid-template-columns: 1fr;
+            padding: 64px 20px;
+            gap: 48px;
+          }
+          .video-img {
+            height: 260px;
+          }
+          .video-frame {
+            top: 10px;
+            left: -10px;
+          }
+        }
+      `}</style>
+
       {/* ── Texture orbs ── */}
       <div style={{
         position: "absolute", top: "-160px", right: "-160px",
@@ -37,15 +71,7 @@ export default function VideoSection() {
       }} />
 
       {/* ── Main grid ── */}
-      <div style={{
-        maxWidth: "80rem",           /* 7xl = 1280px */
-        margin: "0 auto",
-        padding: "96px 40px",
-        display: "grid",
-        gridTemplateColumns: "repeat(2, 1fr)",  /* fixed 2-col, no auto-fit collapse */
-        gap: "80px",
-        alignItems: "center",
-      }}>
+      <div className="video-grid">
 
         {/* ── IMAGE SIDE ── */}
         <motion.div
@@ -56,22 +82,25 @@ export default function VideoSection() {
           style={{ position: "relative" }}
         >
           {/* Gold frame offset */}
-          <div style={{
-            position: "absolute",
-            top: "14px", left: "-14px",
-            width: "100%", height: "100%",
-            border: `2px solid rgba(232,146,10,0.2)`,
-            borderRadius: "2px",
-            zIndex: 0,
-          }} />
+          <div
+            className="video-frame"
+            style={{
+              position: "absolute",
+              width: "100%", height: "100%",
+              border: `2px solid rgba(232,146,10,0.2)`,
+              borderRadius: "2px",
+              zIndex: 0,
+            }}
+          />
 
           <Link to="/academy/videos" style={{ display: "block", position: "relative", zIndex: 1 }}>
             <div style={{ borderRadius: "2px", overflow: "hidden", boxShadow: "0 16px 48px rgba(26,10,0,0.14)", position: "relative" }}>
               <img
                 src="/images/home/video.png"
                 alt="ADA Video"
+                className="video-img"
                 style={{
-                  width: "100%", height: "420px",
+                  width: "100%",
                   objectFit: "cover", display: "block",
                   transition: "transform 0.5s ease",
                 }}
@@ -169,7 +198,6 @@ export default function VideoSection() {
               color: P.ink,
               lineHeight: 1.1,
               letterSpacing: "-0.025em",
-              marginBottom: "18px",
               margin: "0 0 18px 0",
             }}
           >
@@ -262,16 +290,11 @@ export default function VideoSection() {
             >
               <span
                 style={{
-                  width: "22px",
-                  height: "22px",
+                  width: "22px", height: "22px",
                   borderRadius: "50%",
                   border: "1.5px solid rgba(255,255,255,0.4)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "8px",
-                  paddingLeft: "2px",
-                  flexShrink: 0,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: "8px", paddingLeft: "2px", flexShrink: 0,
                 }}
               >
                 ▶

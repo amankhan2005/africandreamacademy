@@ -22,6 +22,49 @@ export default function YouthAmbassador() {
         overflow: "hidden",
       }}
     >
+      {/* ── Responsive styles ── */}
+      <style>{`
+        .ya-grid {
+          max-width: 80rem;
+          margin: 0 auto;
+          padding: 96px 40px;
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 80px;
+          align-items: center;
+        }
+        .ya-img {
+          height: 420px;
+        }
+        .ya-frame {
+          top: 14px;
+          right: -14px;
+        }
+        .ya-body p {
+          max-width: 480px;
+        }
+        @media (max-width: 768px) {
+          .ya-grid {
+            grid-template-columns: 1fr;
+            padding: 64px 20px;
+            gap: 48px;
+          }
+          .ya-img {
+            height: 280px;
+          }
+          .ya-frame {
+            top: 10px;
+            right: -10px;
+          }
+          .ya-image-col {
+            order: -1;
+          }
+          .ya-body p {
+            max-width: 100%;
+          }
+        }
+      `}</style>
+
       {/* ── Texture orbs ── */}
       <div style={{
         position: "absolute", top: "-160px", left: "-160px",
@@ -37,15 +80,7 @@ export default function YouthAmbassador() {
       }} />
 
       {/* ── Main grid ── */}
-      <div style={{
-        maxWidth: "80rem",
-        margin: "0 auto",
-        padding: "96px 40px",
-        display: "grid",
-        gridTemplateColumns: "repeat(2, 1fr)",
-        gap: "80px",
-        alignItems: "center",
-      }}>
+      <div className="ya-grid">
 
         {/* ── CONTENT SIDE ── */}
         <motion.div
@@ -83,20 +118,18 @@ export default function YouthAmbassador() {
               fontSize: "clamp(2rem, 3.5vw, 2.75rem)",
               fontWeight: 800,
               color: P.ink,
-              lineHeight: 1.25, // ✅ increased
+              lineHeight: 1.25,
               letterSpacing: "-0.025em",
               margin: "0 0 18px 0",
             }}
           >
             ADAF Youth{" "}
-            <span
-              style={{
-                color: P.crimson,
-                borderBottom: `3px solid ${P.gold}`,
-                paddingBottom: "4px",
-                display: "inline-block",
-              }}
-            >
+            <span style={{
+              color: P.crimson,
+              borderBottom: `3px solid ${P.gold}`,
+              paddingBottom: "4px",
+              display: "inline-block",
+            }}>
               Ambassador
             </span>{" "}
             Program 2025–26
@@ -119,6 +152,7 @@ export default function YouthAmbassador() {
 
           {/* Body */}
           <motion.div
+            className="ya-body"
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -129,7 +163,6 @@ export default function YouthAmbassador() {
               fontSize: "clamp(0.95rem, 1.3vw, 1.05rem)",
               lineHeight: 1.85,
               fontWeight: 400,
-              maxWidth: "480px",
               margin: "0 0 16px 0",
             }}>
               Announcing our new ADAF Youth Ambassador Program 2025–26.
@@ -142,7 +175,6 @@ export default function YouthAmbassador() {
               fontSize: "clamp(0.95rem, 1.3vw, 1.05rem)",
               lineHeight: 1.85,
               fontWeight: 400,
-              maxWidth: "480px",
               margin: "0 0 36px 0",
             }}>
               Learn more about the program and support a student by donating
@@ -188,15 +220,9 @@ export default function YouthAmbassador() {
               }}
             >
               Learn More
-              <svg
-                width="14" height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" strokeWidth="2.5"
+                strokeLinecap="round" strokeLinejoin="round">
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </Link>
@@ -205,6 +231,7 @@ export default function YouthAmbassador() {
 
         {/* ── IMAGE SIDE ── */}
         <motion.div
+          className="ya-image-col"
           initial={{ opacity: 0, x: 36 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -212,14 +239,16 @@ export default function YouthAmbassador() {
           style={{ position: "relative" }}
         >
           {/* Gold frame offset */}
-          <div style={{
-            position: "absolute",
-            top: "14px", right: "-14px",
-            width: "100%", height: "100%",
-            border: `2px solid rgba(232,146,10,0.2)`,
-            borderRadius: "2px",
-            zIndex: 0,
-          }} />
+          <div
+            className="ya-frame"
+            style={{
+              position: "absolute",
+              width: "100%", height: "100%",
+              border: `2px solid rgba(232,146,10,0.2)`,
+              borderRadius: "2px",
+              zIndex: 0,
+            }}
+          />
 
           <div style={{
             position: "relative",
@@ -231,8 +260,9 @@ export default function YouthAmbassador() {
             <img
               src="/images/home/ADA_Ambassador_Ollie.png"
               alt="Youth Ambassador Program"
+              className="ya-img"
               style={{
-                width: "100%", height: "420px",
+                width: "100%",
                 objectFit: "cover", display: "block",
                 transition: "transform 0.5s ease",
               }}
