@@ -77,7 +77,6 @@ const timelineEvents = [
   },
 ];
 
-// 6 new campus images + 5 old campus images = 11 total
 const newCampusImages = [
   { src: "/images/history/new/library.webp",     caption: "New library — larger space, more bookshelves" },
   { src: "/images/history/new/veranda.webp",      caption: "Students on the veranda, new campus" },
@@ -103,24 +102,123 @@ export default function History() {
     <div style={{ fontFamily: FONT, background: P.warmWhite }}>
 
       <style>{`
-        .hist-hero-inner   { padding: 120px 2rem 96px; }
-        .hist-tl-grid      { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .hist-gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-        .hist-old-grid     { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        /* ── Hero ── */
+        .hist-hero-inner { padding: 120px 2rem 96px; }
+
+        /* ── Hero stats: wrapping flex on all screens ── */
+        .hist-stats {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 10px;
+        }
+        .hist-stat-pill {
+          padding: 12px 20px;
+          background: rgba(255,255,255,0.07);
+          border: 1px solid rgba(255,255,255,0.15);
+          border-top: 2px solid #F0B429;
+          border-radius: 2px;
+          text-align: center;
+          min-width: 100px;
+          flex: 1 1 auto;
+          max-width: 160px;
+        }
+
+        /* ── Desktop timeline: alternating two-column ── */
+        .hist-tl-entry {
+          display: grid;
+          grid-template-columns: 1fr 48px 1fr;
+          gap: 0;
+          margin-bottom: 8px;
+        }
+        .hist-tl-left  { padding: 0 32px 0 0; }
+        .hist-tl-right { padding: 0 0 0 32px; }
+        .hist-tl-center-line {
+          position: absolute;
+          left: 50%;
+          top: 0; bottom: 0;
+          width: 1px;
+          background: rgba(139,26,26,0.12);
+          transform: translateX(-50%);
+        }
+
+        /* ── Mobile timeline: single column with left rail ── */
+        @media (max-width: 700px) {
+          .hist-tl-entry {
+            display: block;
+            padding-left: 28px;
+            position: relative;
+            margin-bottom: 0;
+          }
+          .hist-tl-left, .hist-tl-right { padding: 0; text-align: left !important; }
+          .hist-tl-dot-col { display: none !important; }
+          .hist-tl-center-line { display: none; }
+          .hist-tl-entry::before {
+            content: '';
+            position: absolute;
+            left: 6px; top: 24px;
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: #E8920A;
+            border: 2px solid #FFFBF5;
+            box-shadow: 0 0 0 1px #E8920A;
+            z-index: 1;
+          }
+        }
+
+        /* ── Mobile rail line ── */
+        .hist-tl-mobile-rail {
+          display: none;
+        }
+        @media (max-width: 700px) {
+          .hist-tl-mobile-rail {
+            display: block;
+            position: absolute;
+            left: 9px; top: 0; bottom: 0;
+            width: 1px;
+            background: rgba(139,26,26,0.12);
+          }
+        }
+
+        /* ── Galleries ── */
+        .hist-gallery-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 12px;
+        }
+        .hist-old-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 12px;
+        }
+
+        /* ── Closing stats ── */
+        .hist-closing-stats {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 32px;
+        }
+
+        /* ── Tablet ── */
         @media (max-width: 900px) {
-          .hist-tl-grid      { grid-template-columns: 1fr; }
           .hist-gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
           .hist-old-grid     { grid-template-columns: repeat(2, 1fr); gap: 8px; }
           .hist-hero-inner   { padding: 80px 1.25rem 64px; }
         }
+
+        /* ── Mobile ── */
         @media (max-width: 480px) {
-          .hist-gallery-grid { grid-template-columns: 1fr; }
-          .hist-old-grid     { grid-template-columns: 1fr; }
+          .hist-hero-inner   { padding: 64px 1rem 56px; }
+          .hist-gallery-grid { grid-template-columns: 1fr; gap: 8px; }
+          .hist-old-grid     { grid-template-columns: 1fr; gap: 8px; }
+          .hist-stat-pill    { max-width: 140px; padding: 10px 14px; }
+          .hist-closing-stats { gap: 20px; }
         }
       `}</style>
 
       {/* ══════════════════════════════════════
-          HERO — crimson
+          HERO
       ══════════════════════════════════════ */}
       <section style={{ background: P.crimson, position: "relative", overflow: "hidden" }}>
 
@@ -152,8 +250,8 @@ export default function History() {
           </motion.div>
 
           <motion.h1 {...fadeUp(0.12)} style={{
-            fontSize: "clamp(2.4rem, 5vw, 3.6rem)", fontWeight: 800,
-            color: "#fff", lineHeight: 1.1, letterSpacing: "-0.025em", margin: "0 0 10px",
+            fontSize: "clamp(2rem, 5vw, 3.6rem)", fontWeight: 800,
+            color: "#fff", lineHeight: 1.15, letterSpacing: "-0.025em", margin: "0 0 10px",
           }}>
             History of the{" "}
             <span style={{ color: P.gold, borderBottom: `3px solid rgba(240,180,41,0.45)`, paddingBottom: "4px", display: "inline-block" }}>
@@ -172,7 +270,7 @@ export default function History() {
           />
 
           <motion.p {...fadeUp(0.28)} style={{
-            fontSize: "clamp(1rem, 1.5vw, 1.1rem)", color: "rgba(255,255,255,0.78)",
+            fontSize: "clamp(0.95rem, 1.5vw, 1.1rem)", color: "rgba(255,255,255,0.78)",
             lineHeight: 1.85, maxWidth: "680px", margin: "0 auto 48px", fontWeight: 400,
           }}>
             In April 2012, Reverend Enders leased a single-story building in Paynesville,
@@ -181,8 +279,8 @@ export default function History() {
             of 1,500 children it is today.
           </motion.p>
 
-          {/* Stats */}
-          <motion.div {...fadeUp(0.38)} style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "12px" }}>
+          {/* Stats — wrapping flex so they reflow on mobile */}
+          <motion.div {...fadeUp(0.38)} className="hist-stats">
             {[
               { v: "2012", l: "Founded" },
               { v: "144", l: "First students" },
@@ -190,14 +288,8 @@ export default function History() {
               { v: "2022", l: "First graduates" },
               { v: "1,500+", l: "Current enrollment" },
             ].map((s, i) => (
-              <div key={i} style={{
-                padding: "14px 24px",
-                background: "rgba(255,255,255,0.07)",
-                border: "1px solid rgba(255,255,255,0.15)",
-                borderTop: `2px solid ${P.gold}`,
-                borderRadius: "2px", textAlign: "center",
-              }}>
-                <div style={{ fontSize: "1.5rem", fontWeight: 800, color: P.gold, letterSpacing: "-0.03em", lineHeight: 1 }}>{s.v}</div>
+              <div key={i} className="hist-stat-pill">
+                <div style={{ fontSize: "1.4rem", fontWeight: 800, color: P.gold, letterSpacing: "-0.03em", lineHeight: 1 }}>{s.v}</div>
                 <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.45)", letterSpacing: "2px", textTransform: "uppercase", fontWeight: 600, marginTop: "5px" }}>{s.l}</div>
               </div>
             ))}
@@ -207,12 +299,11 @@ export default function History() {
       </section>
 
       {/* ══════════════════════════════════════
-          TIMELINE — warm white
+          TIMELINE
       ══════════════════════════════════════ */}
       <section style={{ background: P.warmWhite, padding: "100px 0" }}>
         <div style={{ maxWidth: "80rem", margin: "0 auto", padding: "0 2rem" }}>
 
-          {/* Header */}
           <motion.div {...fadeUp(0)} style={{ textAlign: "center", marginBottom: "64px" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "12px", marginBottom: "20px" }}>
               <div style={{ height: "1px", width: "36px", background: P.amber }} />
@@ -222,7 +313,7 @@ export default function History() {
               <div style={{ height: "1px", width: "36px", background: P.amber }} />
             </div>
             <h2 style={{
-              fontSize: "clamp(2rem, 3.5vw, 2.8rem)", fontWeight: 800,
+              fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 800,
               color: P.ink, lineHeight: 1.1, letterSpacing: "-0.025em", margin: "0 0 16px",
             }}>
               A Decade of{" "}
@@ -243,76 +334,63 @@ export default function History() {
 
           {/* Timeline entries */}
           <div style={{ position: "relative" }}>
-
-            {/* Center vertical line (desktop) */}
-            <div style={{
-              position: "absolute", left: "50%", top: 0, bottom: 0,
-              width: "1px", background: "rgba(139,26,26,0.12)",
-              transform: "translateX(-50%)",
-            }} />
+            {/* Desktop center line */}
+            <div className="hist-tl-center-line" />
+            {/* Mobile left rail */}
+            <div className="hist-tl-mobile-rail" />
 
             <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
               {timelineEvents.map((ev, i) => {
                 const isLeft = i % 2 === 0;
+                const accentColor = i % 3 === 0 ? P.crimson : i % 3 === 1 ? P.amber : P.gold;
+
+                const card = (
+                  <div style={{
+                    background: "#fff",
+                    border: `1px solid rgba(139,26,26,0.1)`,
+                    borderLeft: `3px solid ${accentColor}`,
+                    borderRadius: "2px",
+                    padding: "20px 24px",
+                    boxShadow: "0 2px 16px rgba(26,10,0,0.06)",
+                    marginBottom: "16px",
+                    textAlign: "left",
+                  }}>
+                    <div style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "2.5px", textTransform: "uppercase", color: P.amber, marginBottom: "6px" }}>{ev.year}</div>
+                    <h3 style={{ fontSize: "1rem", fontWeight: 800, color: P.ink, margin: "0 0 8px", letterSpacing: "-0.01em" }}>{ev.title}</h3>
+                    <p style={{ fontSize: "0.9rem", color: "rgba(26,10,0,0.58)", lineHeight: 1.8, margin: 0 }}>{ev.body}</p>
+                  </div>
+                );
+
                 return (
-                  <motion.div
-                    key={i}
-                    {...fadeUp(i * 0.06)}
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "1fr 48px 1fr",
-                      gap: "0",
-                      marginBottom: "8px",
-                    }}
-                  >
-                    {/* Left slot */}
-                    <div style={{ padding: isLeft ? "0 32px 0 0" : "0", textAlign: isLeft ? "right" : "left" }}>
-                      {isLeft && (
-                        <div style={{
-                          background: "#fff",
-                          border: `1px solid rgba(139,26,26,0.1)`,
-                          borderLeft: `3px solid ${i % 3 === 0 ? P.crimson : i % 3 === 1 ? P.amber : P.gold}`,
-                          borderRadius: "2px",
-                          padding: "20px 24px",
-                          boxShadow: "0 2px 16px rgba(26,10,0,0.06)",
-                          textAlign: "left",
-                        }}>
-                          <div style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "2.5px", textTransform: "uppercase", color: P.amber, marginBottom: "6px" }}>{ev.year}</div>
-                          <h3 style={{ fontSize: "1rem", fontWeight: 800, color: P.ink, margin: "0 0 8px", letterSpacing: "-0.01em" }}>{ev.title}</h3>
-                          <p style={{ fontSize: "0.9rem", color: "rgba(26,10,0,0.58)", lineHeight: 1.8, margin: 0 }}>{ev.body}</p>
-                        </div>
-                      )}
+                  <motion.div key={i} {...fadeUp(i * 0.06)} className="hist-tl-entry">
+
+                    {/* Left slot (desktop only for even items) */}
+                    <div className="hist-tl-left" style={{ textAlign: isLeft ? "right" : "left", minWidth: 0 }}>
+                      {isLeft && card}
                     </div>
 
-                    {/* Center dot */}
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-start", paddingTop: "24px" }}>
+                    {/* Center dot (desktop only) */}
+                    <div
+                      className="hist-tl-dot-col"
+                      style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-start", paddingTop: "24px" }}
+                    >
                       <div style={{
                         width: "14px", height: "14px", borderRadius: "50%",
-                        background: i % 3 === 0 ? P.crimson : i % 3 === 1 ? P.amber : P.gold,
+                        background: accentColor,
                         border: "3px solid white",
-                        boxShadow: `0 0 0 1px ${i % 3 === 0 ? P.crimson : i % 3 === 1 ? P.amber : P.gold}`,
+                        boxShadow: `0 0 0 1px ${accentColor}`,
                         flexShrink: 0, zIndex: 1,
                       }} />
                     </div>
 
-                    {/* Right slot */}
-                    <div style={{ padding: !isLeft ? "0 0 0 32px" : "0" }}>
-                      {!isLeft && (
-                        <div style={{
-                          background: "#fff",
-                          border: `1px solid rgba(139,26,26,0.1)`,
-                          borderLeft: `3px solid ${i % 3 === 0 ? P.crimson : i % 3 === 1 ? P.amber : P.gold}`,
-                          borderRadius: "2px",
-                          padding: "20px 24px",
-                          boxShadow: "0 2px 16px rgba(26,10,0,0.06)",
-                        }}>
-                          <div style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "2.5px", textTransform: "uppercase", color: P.amber, marginBottom: "6px" }}>{ev.year}</div>
-                          <h3 style={{ fontSize: "1rem", fontWeight: 800, color: P.ink, margin: "0 0 8px", letterSpacing: "-0.01em" }}>{ev.title}</h3>
-                          <p style={{ fontSize: "0.9rem", color: "rgba(26,10,0,0.58)", lineHeight: 1.8, margin: 0 }}>{ev.body}</p>
-                        </div>
-                      )}
+                    {/* Right slot (desktop only for odd items) */}
+                    <div className="hist-tl-right">
+                      {!isLeft && card}
                     </div>
 
+                    {/* Mobile: always render card (left/right already hidden on mobile via ::before dot) */}
+                    {/* The card is already rendered above in left/right slots; on mobile those containers
+                        lose their padding so both render, but only the correct one has content. */}
                   </motion.div>
                 );
               })}
@@ -323,7 +401,7 @@ export default function History() {
       </section>
 
       {/* ══════════════════════════════════════
-          NEW CAMPUS GALLERY — crimson
+          NEW CAMPUS GALLERY
       ══════════════════════════════════════ */}
       <section style={{ background: P.crimson, position: "relative", overflow: "hidden", padding: "100px 0" }}>
 
@@ -345,7 +423,7 @@ export default function History() {
               <div style={{ height: "1px", width: "36px", background: P.amber }} />
             </div>
             <h2 style={{
-              fontSize: "clamp(2rem, 3.5vw, 2.8rem)", fontWeight: 800,
+              fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 800,
               color: "#fff", lineHeight: 1.1, letterSpacing: "-0.025em", margin: "0 0 16px",
             }}>
               The New{" "}
@@ -362,7 +440,7 @@ export default function History() {
                 margin: "0 auto 20px",
               }}
             />
-            <p style={{ color: "rgba(255,255,255,0.72)", fontSize: "clamp(0.95rem, 1.3vw, 1.05rem)", lineHeight: 1.8, maxWidth: "560px", margin: "0 auto" }}>
+            <p style={{ color: "rgba(255,255,255,0.72)", fontSize: "clamp(0.9rem, 1.3vw, 1.05rem)", lineHeight: 1.8, maxWidth: "560px", margin: "0 auto" }}>
               On October 28, 2019, ADA opened a campus it owns — complete with new classrooms,
               a library, computer lab, science lab, running water, and a paved courtyard.
             </p>
@@ -383,6 +461,7 @@ export default function History() {
                     position: "relative", cursor: "pointer",
                     overflow: "hidden", borderRadius: "2px",
                     boxShadow: "0 4px 24px rgba(0,0,0,0.25)",
+                    /* span 2 rows only on desktop (3-col grid) */
                     gridRow: tall ? "span 2" : "span 1",
                   }}
                 >
@@ -404,7 +483,6 @@ export default function History() {
                     opacity: hovered === uid ? 1 : 0.5,
                     transition: "opacity 0.3s ease",
                   }} />
-                  {/* Caption always visible at bottom */}
                   <div style={{
                     position: "absolute", bottom: 0, left: 0, right: 0,
                     padding: "14px 16px",
@@ -416,7 +494,6 @@ export default function History() {
                       {img.caption}
                     </div>
                   </div>
-                  {/* Bottom accent */}
                   <div style={{
                     position: "absolute", bottom: 0, left: 0, right: 0, height: "3px",
                     background: `linear-gradient(to right, ${P.gold}, ${P.amber})`,
@@ -432,7 +509,7 @@ export default function History() {
       </section>
 
       {/* ══════════════════════════════════════
-          OLD CAMPUS GALLERY — warm white
+          OLD CAMPUS GALLERY
       ══════════════════════════════════════ */}
       <section style={{ background: P.warmWhite, padding: "100px 0" }}>
         <div style={{ maxWidth: "80rem", margin: "0 auto", padding: "0 2rem" }}>
@@ -446,7 +523,7 @@ export default function History() {
               <div style={{ height: "1px", width: "36px", background: P.amber }} />
             </div>
             <h2 style={{
-              fontSize: "clamp(2rem, 3.5vw, 2.8rem)", fontWeight: 800,
+              fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 800,
               color: P.ink, lineHeight: 1.1, letterSpacing: "-0.025em", margin: "0 0 16px",
             }}>
               First Campus —{" "}
@@ -463,7 +540,7 @@ export default function History() {
                 margin: "0 auto 20px",
               }}
             />
-            <p style={{ color: "rgba(26,10,0,0.58)", fontSize: "clamp(0.95rem, 1.3vw, 1.05rem)", lineHeight: 1.8, maxWidth: "560px", margin: "0 auto" }}>
+            <p style={{ color: "rgba(26,10,0,0.58)", fontSize: "clamp(0.9rem, 1.3vw, 1.05rem)", lineHeight: 1.8, maxWidth: "560px", margin: "0 auto" }}>
               Reverend Enders, staff, and volunteers transformed a leased one-story building
               into a two-story school that served hundreds of children for seven years.
             </p>
@@ -531,7 +608,7 @@ export default function History() {
       </section>
 
       {/* ══════════════════════════════════════
-          CLOSING MILESTONE — crimson
+          CLOSING MILESTONE
       ══════════════════════════════════════ */}
       <section style={{ background: P.crimson, position: "relative", overflow: "hidden", padding: "88px 0" }}>
         <div style={{
@@ -540,7 +617,7 @@ export default function History() {
           background: "radial-gradient(circle, rgba(240,180,41,0.07) 0%, transparent 65%)",
           pointerEvents: "none",
         }} />
-        <div style={{ maxWidth: "60rem", margin: "0 auto", padding: "0 2rem", textAlign: "center", position: "relative", zIndex: 1 }}>
+        <div style={{ maxWidth: "60rem", margin: "0 auto", padding: "0 1.5rem", textAlign: "center", position: "relative", zIndex: 1 }}>
           <motion.div {...fadeUp(0)} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "12px", marginBottom: "20px" }}>
             <div style={{ height: "1px", width: "36px", background: P.amber }} />
             <span style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "3.5px", textTransform: "uppercase", color: P.amber }}>
@@ -549,7 +626,7 @@ export default function History() {
             <div style={{ height: "1px", width: "36px", background: P.amber }} />
           </motion.div>
           <motion.p {...fadeUp(0.1)} style={{
-            fontSize: "clamp(1.1rem, 1.8vw, 1.25rem)", color: "rgba(255,255,255,0.82)",
+            fontSize: "clamp(0.95rem, 1.8vw, 1.25rem)", color: "rgba(255,255,255,0.82)",
             lineHeight: 1.85, margin: "0 0 40px", fontWeight: 400,
           }}>
             From 144 students in a leased building to 1,500 children on two owned campuses —
@@ -557,7 +634,7 @@ export default function History() {
             The third graduating class numbered 144 — the same as the very first class that
             walked through ADA's doors in 2012.
           </motion.p>
-          <motion.div {...fadeUp(0.2)} style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "32px" }}>
+          <motion.div {...fadeUp(0.2)} className="hist-closing-stats">
             {[
               { v: "16", l: "First graduates, 2022" },
               { v: "36", l: "Second class" },
@@ -565,7 +642,7 @@ export default function History() {
               { v: "350", l: "ADA-TI graduates" },
             ].map((s, i) => (
               <div key={i} style={{ textAlign: "center" }}>
-                <div style={{ fontSize: "2.2rem", fontWeight: 800, color: P.gold, letterSpacing: "-0.03em", lineHeight: 1 }}>{s.v}</div>
+                <div style={{ fontSize: "clamp(1.6rem, 4vw, 2.2rem)", fontWeight: 800, color: P.gold, letterSpacing: "-0.03em", lineHeight: 1 }}>{s.v}</div>
                 <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.45)", letterSpacing: "2px", textTransform: "uppercase", fontWeight: 600, marginTop: "6px" }}>{s.l}</div>
               </div>
             ))}
@@ -582,7 +659,8 @@ export default function History() {
           initial={{ opacity: 0 }} animate={{ opacity: 1 }}
           style={{
             position: "fixed", inset: 0, background: "rgba(26,10,0,0.94)",
-            display: "flex", alignItems: "center", justifyContent: "center", zIndex: 9999,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            zIndex: 9999, padding: "1rem",
           }}
         >
           <motion.div
@@ -593,22 +671,25 @@ export default function History() {
               padding: "4px",
               background: `linear-gradient(135deg, ${P.gold}, ${P.crimson})`,
               borderRadius: "3px",
+              maxWidth: "calc(100vw - 2rem)",
             }}
           >
             <img
               src={activeImg} alt="History"
-              style={{ maxHeight: "85vh", maxWidth: "88vw", objectFit: "contain", display: "block", borderRadius: "1px" }}
+              style={{ maxHeight: "80vh", maxWidth: "100%", objectFit: "contain", display: "block", borderRadius: "1px" }}
             />
           </motion.div>
           <button
             onClick={() => setActiveImg(null)}
             style={{
-              position: "absolute", top: "24px", right: "28px",
+              position: "absolute", top: "16px", right: "16px",
               background: "none", border: `1px solid rgba(240,180,41,0.4)`,
               borderRadius: "50%", width: "44px", height: "44px",
               color: P.gold, fontSize: "24px", cursor: "pointer",
               display: "flex", alignItems: "center", justifyContent: "center",
               transition: "border-color 0.2s, color 0.2s",
+              /* Ensure tap target is accessible on mobile */
+              touchAction: "manipulation",
             }}
             onMouseEnter={e => { e.currentTarget.style.borderColor = P.gold; e.currentTarget.style.color = "#fff"; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(240,180,41,0.4)"; e.currentTarget.style.color = P.gold; }}

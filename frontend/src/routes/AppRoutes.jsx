@@ -12,7 +12,7 @@ import History from "../pages/academy/history";
 import Liberia from "../pages/academy/liberia";
 import Videos from "../pages/academy/videos";
 import Blog from "../pages/academy/blog";
-
+import BlogDetail from "../pages/academy/BlogDetail";
 /* Foundation Pages */
 import Founder from "../pages/foundation/founder";
 import Mission from "../pages/foundation/mission";
@@ -42,6 +42,7 @@ export default function AppRoutes() {
           <Route path="/academy/liberia" element={<Liberia />} />
           <Route path="/academy/videos" element={<Videos />} />
           <Route path="/academy/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogDetail />} />
           <Route path="/youth-ambassador" element={<YouthAmbassador />} />
 
           {/* Foundation */}

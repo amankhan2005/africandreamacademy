@@ -57,24 +57,163 @@ export default function Liberia() {
     <div style={{ fontFamily: FONT, background: P.warmWhite }}>
 
       <style>{`
-        .lib-hero-inner    { padding: 120px 2rem 96px; }
-        .lib-overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-        .lib-econ-grid     { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
-        .lib-exports-grid  { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
-        .lib-gallery-grid  { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
-        @media (max-width: 1024px) {
-          .lib-econ-grid { grid-template-columns: repeat(2,1fr); }
+        /* ── Hero ── */
+        .lib-hero-inner { padding: 120px 2rem 96px; }
+
+        /* ── Hero quick-facts pills ── */
+        .lib-facts {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 10px;
         }
+        .lib-fact-pill {
+          padding: 12px 20px;
+          background: rgba(255,255,255,0.07);
+          border: 1px solid rgba(255,255,255,0.15);
+          border-top: 2px solid #F0B429;
+          border-radius: 2px;
+          text-align: center;
+          flex: 1 1 auto;
+          min-width: 100px;
+          max-width: 160px;
+        }
+
+        /* ── Two-column overview / closing ── */
+        .lib-overview-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 80px;
+          align-items: center;
+        }
+
+        /* ── Economy stat cards ── */
+        .lib-econ-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 16px;
+        }
+
+        /* ── Economy two-col text+exports ── */
+        .lib-econ-body {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 48px;
+          align-items: start;
+        }
+
+        /* ── Exports pills ── */
+        .lib-exports-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 10px;
+        }
+
+        /* ── Photo gallery ── */
+        .lib-gallery-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 12px;
+        }
+
+        /* ── History timeline ── */
+        .lib-tl-center-line {
+          position: absolute;
+          left: 50%; top: 0; bottom: 0;
+          width: 1px;
+          background: rgba(255,255,255,0.12);
+          transform: translateX(-50%);
+        }
+        .lib-tl-entry {
+          display: grid;
+          grid-template-columns: 1fr 48px 1fr;
+          margin-bottom: 8px;
+        }
+        .lib-tl-left  { padding: 0 32px 0 0; }
+        .lib-tl-right { padding: 0 0 0 32px; }
+        .lib-tl-dot-col {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: flex-start;
+          padding-top: 22px;
+        }
+
+        /* ════════════════════════════
+           TABLET  ≤ 1024px
+        ════════════════════════════ */
+        @media (max-width: 1024px) {
+          .lib-econ-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* ════════════════════════════
+           TABLET  ≤ 900px
+        ════════════════════════════ */
         @media (max-width: 900px) {
           .lib-overview-grid { grid-template-columns: 1fr; gap: 40px; }
-          .lib-gallery-grid  { grid-template-columns: repeat(2,1fr); gap: 8px; }
-          .lib-exports-grid  { grid-template-columns: repeat(2,1fr); }
+          .lib-gallery-grid  { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+          .lib-exports-grid  { grid-template-columns: repeat(2, 1fr); }
           .lib-hero-inner    { padding: 80px 1.25rem 64px; }
           .lib-img-order     { order: -1; }
+          .lib-econ-body     { grid-template-columns: 1fr; gap: 32px; }
         }
+
+        /* ════════════════════════════
+           MOBILE  ≤ 700px
+           Timeline collapses to left-rail single column
+        ════════════════════════════ */
+        @media (max-width: 700px) {
+          .lib-tl-entry {
+            display: block;
+            padding-left: 28px;
+            position: relative;
+            margin-bottom: 0;
+          }
+          .lib-tl-left, .lib-tl-right {
+            padding: 0;
+            text-align: left !important;
+          }
+          .lib-tl-dot-col { display: none !important; }
+          .lib-tl-center-line { display: none; }
+          .lib-tl-entry::before {
+            content: '';
+            position: absolute;
+            left: 6px; top: 22px;
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: #E8920A;
+            border: 2px solid #8B1A1A;
+            box-shadow: 0 0 0 1px #E8920A;
+            z-index: 1;
+          }
+        }
+
+        /* Mobile left rail line */
+        .lib-tl-mobile-rail { display: none; }
+        @media (max-width: 700px) {
+          .lib-tl-mobile-rail {
+            display: block;
+            position: absolute;
+            left: 9px; top: 0; bottom: 0;
+            width: 1px;
+            background: rgba(255,255,255,0.15);
+          }
+        }
+
+        /* ════════════════════════════
+           MOBILE  ≤ 480px
+        ════════════════════════════ */
         @media (max-width: 480px) {
-          .lib-econ-grid    { grid-template-columns: 1fr 1fr; }
-          .lib-gallery-grid { grid-template-columns: 1fr 1fr; }
+          .lib-hero-inner    { padding: 64px 1rem 56px; }
+          .lib-econ-grid     { grid-template-columns: 1fr 1fr; }
+          .lib-gallery-grid  { grid-template-columns: 1fr 1fr; gap: 8px; }
+          .lib-fact-pill     { max-width: 140px; padding: 10px 14px; }
+          .lib-exports-grid  { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 360px) {
+          .lib-gallery-grid { grid-template-columns: 1fr; }
+          .lib-exports-grid { grid-template-columns: repeat(2, 1fr); }
         }
       `}</style>
 
@@ -111,8 +250,8 @@ export default function Liberia() {
           </motion.div>
 
           <motion.h1 {...fadeUp(0.12)} style={{
-            fontSize: "clamp(2.4rem, 5vw, 3.6rem)", fontWeight: 800,
-            color: "#fff", lineHeight: 1.1, letterSpacing: "-0.025em", margin: "0 0 10px",
+            fontSize: "clamp(2rem, 5vw, 3.6rem)", fontWeight: 800,
+            color: "#fff", lineHeight: 1.15, letterSpacing: "-0.025em", margin: "0 0 10px",
           }}>
             Liberia:{" "}
             <span style={{ color: P.gold, borderBottom: `3px solid rgba(240,180,41,0.45)`, paddingBottom: "4px", display: "inline-block" }}>
@@ -131,7 +270,7 @@ export default function Liberia() {
           />
 
           <motion.p {...fadeUp(0.28)} style={{
-            fontSize: "clamp(1rem, 1.5vw, 1.1rem)", color: "rgba(255,255,255,0.78)",
+            fontSize: "clamp(0.95rem, 1.5vw, 1.1rem)", color: "rgba(255,255,255,0.78)",
             lineHeight: 1.85, maxWidth: "680px", margin: "0 auto 48px", fontWeight: 400,
           }}>
             Africa's oldest republic, founded in 1847 by freed American and Caribbean slaves,
@@ -140,8 +279,8 @@ export default function Liberia() {
             pressing education crises.
           </motion.p>
 
-          {/* Quick facts */}
-          <motion.div {...fadeUp(0.38)} style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "12px" }}>
+          {/* Quick facts — wrapping pills */}
+          <motion.div {...fadeUp(0.38)} className="lib-facts">
             {[
               { v: "1847", l: "Independence" },
               { v: "English", l: "Official language" },
@@ -149,14 +288,8 @@ export default function Liberia() {
               { v: "85.6%", l: "Christian" },
               { v: "5%", l: "Freed slave descendants" },
             ].map((s, i) => (
-              <div key={i} style={{
-                padding: "14px 22px",
-                background: "rgba(255,255,255,0.07)",
-                border: "1px solid rgba(255,255,255,0.15)",
-                borderTop: `2px solid ${P.gold}`,
-                borderRadius: "2px", textAlign: "center",
-              }}>
-                <div style={{ fontSize: "1.3rem", fontWeight: 800, color: P.gold, letterSpacing: "-0.03em", lineHeight: 1 }}>{s.v}</div>
+              <div key={i} className="lib-fact-pill">
+                <div style={{ fontSize: "1.25rem", fontWeight: 800, color: P.gold, letterSpacing: "-0.03em", lineHeight: 1 }}>{s.v}</div>
                 <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.45)", letterSpacing: "2px", textTransform: "uppercase", fontWeight: 600, marginTop: "5px" }}>{s.l}</div>
               </div>
             ))}
@@ -205,7 +338,7 @@ export default function Liberia() {
               </div>
 
               <h2 style={{
-                fontSize: "clamp(1.9rem, 3vw, 2.6rem)", fontWeight: 800,
+                fontSize: "clamp(1.8rem, 3vw, 2.6rem)", fontWeight: 800,
                 color: P.ink, lineHeight: 1.2, letterSpacing: "-0.025em", margin: "0 0 16px",
               }}>
                 Africa's Oldest{" "}
@@ -216,20 +349,20 @@ export default function Liberia() {
 
               <div style={{ height: "3px", width: "52px", borderRadius: "2px", background: `linear-gradient(to right, ${P.gold}, ${P.amber})`, marginBottom: "24px" }} />
 
-              <p style={{ color: "rgba(26,10,0,0.6)", fontSize: "clamp(0.95rem, 1.2vw, 1.05rem)", lineHeight: 1.85, margin: "0 0 16px" }}>
+              <p style={{ color: "rgba(26,10,0,0.6)", fontSize: "clamp(0.92rem, 1.2vw, 1.05rem)", lineHeight: 1.85, margin: "0 0 16px" }}>
                 The Republic of Liberia holds a unique historical relationship with the United
                 States. It began in 1822 when Americans formed the American Colonization Society
                 to resettle freed American and Caribbean slaves with the support of the U.S.
                 government. This "colony" declared its independence in 1847, taking the name
                 Liberia from 'liber' — meaning free.
               </p>
-              <p style={{ color: "rgba(26,10,0,0.6)", fontSize: "clamp(0.95rem, 1.2vw, 1.05rem)", lineHeight: 1.85, margin: "0 0 16px" }}>
+              <p style={{ color: "rgba(26,10,0,0.6)", fontSize: "clamp(0.92rem, 1.2vw, 1.05rem)", lineHeight: 1.85, margin: "0 0 16px" }}>
                 Today Liberia is mostly made up of indigenous Africans, with the freed slaves'
                 descendants comprising just 5% of the population. English is the official
                 language, though over 20 indigenous languages are spoken. Christianity is
                 practiced by 85.6% of the population.
               </p>
-              <p style={{ color: "rgba(26,10,0,0.6)", fontSize: "clamp(0.95rem, 1.2vw, 1.05rem)", lineHeight: 1.85, margin: 0 }}>
+              <p style={{ color: "rgba(26,10,0,0.6)", fontSize: "clamp(0.92rem, 1.2vw, 1.05rem)", lineHeight: 1.85, margin: 0 }}>
                 Despite its rich natural resources, Liberia remains one of the world's poorest
                 nations — a consequence of two devastating civil wars and decades of political
                 instability.
@@ -260,7 +393,6 @@ export default function Liberia() {
 
         <div style={{ maxWidth: "80rem", margin: "0 auto", padding: "0 2rem" }}>
 
-          {/* Header */}
           <motion.div {...fadeUp(0)} style={{ textAlign: "center", marginBottom: "56px" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "12px", marginBottom: "20px" }}>
               <div style={{ height: "1px", width: "36px", background: P.amber }} />
@@ -270,7 +402,7 @@ export default function Liberia() {
               <div style={{ height: "1px", width: "36px", background: P.amber }} />
             </div>
             <h2 style={{
-              fontSize: "clamp(2rem, 3.5vw, 2.8rem)", fontWeight: 800,
+              fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 800,
               color: "#fff", lineHeight: 1.1, letterSpacing: "-0.025em", margin: "0 0 16px",
             }}>
               Economy &{" "}
@@ -287,7 +419,7 @@ export default function Liberia() {
                 margin: "0 auto 20px",
               }}
             />
-            <p style={{ color: "rgba(255,255,255,0.72)", fontSize: "clamp(0.95rem, 1.3vw, 1.05rem)", lineHeight: 1.8, maxWidth: "560px", margin: "0 auto" }}>
+            <p style={{ color: "rgba(255,255,255,0.72)", fontSize: "clamp(0.9rem, 1.3vw, 1.05rem)", lineHeight: 1.8, maxWidth: "560px", margin: "0 auto" }}>
               Richly endowed with natural resources, Liberia's economy relies heavily on
               foreign assistance and remains extremely vulnerable to food shortages and
               infrastructure collapse.
@@ -301,9 +433,9 @@ export default function Liberia() {
                 background: "rgba(255,255,255,0.07)",
                 border: "1px solid rgba(255,255,255,0.12)",
                 borderTop: `3px solid ${i % 2 === 0 ? P.gold : P.amber}`,
-                borderRadius: "2px", padding: "28px 24px", textAlign: "center",
+                borderRadius: "2px", padding: "24px 20px", textAlign: "center",
               }}>
-                <div style={{ fontSize: "clamp(1.8rem, 2.5vw, 2.2rem)", fontWeight: 800, color: P.gold, letterSpacing: "-0.03em", lineHeight: 1, marginBottom: "10px" }}>
+                <div style={{ fontSize: "clamp(1.5rem, 2.5vw, 2.2rem)", fontWeight: 800, color: P.gold, letterSpacing: "-0.03em", lineHeight: 1, marginBottom: "10px" }}>
                   {s.value}
                 </div>
                 <div style={{ fontSize: "12px", fontWeight: 700, color: "#fff", marginBottom: "4px", letterSpacing: "0.2px" }}>
@@ -316,19 +448,19 @@ export default function Liberia() {
             ))}
           </div>
 
-          {/* Two-col: description + exports */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "48px", alignItems: "start" }}>
+          {/* Two-col: description + exports — collapses at 900px */}
+          <div className="lib-econ-body">
 
             <motion.div {...fadeUp(0.1)}>
               <div style={{ fontSize: "11px", fontWeight: 700, letterSpacing: "3px", textTransform: "uppercase", color: P.amber, marginBottom: "16px" }}>
                 Economic Context
               </div>
-              <p style={{ color: "rgba(255,255,255,0.75)", fontSize: "clamp(0.92rem, 1.2vw, 1rem)", lineHeight: 1.85, margin: "0 0 14px" }}>
+              <p style={{ color: "rgba(255,255,255,0.75)", fontSize: "clamp(0.9rem, 1.2vw, 1rem)", lineHeight: 1.85, margin: "0 0 14px" }}>
                 Liberia imports 90% of its rice — a staple food — leaving the country
                 extremely vulnerable to food shortages. The infrastructure largely remains
                 in ruins following two civil wars spanning from 1989 to 2003.
               </p>
-              <p style={{ color: "rgba(255,255,255,0.75)", fontSize: "clamp(0.92rem, 1.2vw, 1rem)", lineHeight: 1.85, margin: 0 }}>
+              <p style={{ color: "rgba(255,255,255,0.75)", fontSize: "clamp(0.9rem, 1.2vw, 1rem)", lineHeight: 1.85, margin: 0 }}>
                 The monetary unit is the Liberian dollar, with 1 LRD equal to $0.0057 USD.
                 The economy is low-income and heavily relies on foreign assistance, though it
                 is richly endowed with natural resources, minerals, and agricultural potential.
@@ -342,7 +474,7 @@ export default function Liberia() {
               <div className="lib-exports-grid">
                 {["Diamonds", "Iron Ore", "Rubber", "Timber", "Coffee", "Cocoa"].map((exp, i) => (
                   <div key={i} style={{
-                    padding: "11px 14px",
+                    padding: "11px 10px",
                     background: "rgba(255,255,255,0.07)",
                     border: "1px solid rgba(255,255,255,0.12)",
                     borderRadius: "2px",
@@ -380,7 +512,7 @@ export default function Liberia() {
               <div style={{ height: "1px", width: "36px", background: P.amber }} />
             </div>
             <h2 style={{
-              fontSize: "clamp(2rem, 3.5vw, 2.8rem)", fontWeight: 800,
+              fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 800,
               color: P.ink, lineHeight: 1.1, letterSpacing: "-0.025em", margin: "0 0 16px",
             }}>
               Life in{" "}
@@ -464,7 +596,7 @@ export default function Liberia() {
       </section>
 
       {/* ══════════════════════════════════════
-          RECENT HISTORY TIMELINE — crimson
+          HISTORY TIMELINE — crimson
       ══════════════════════════════════════ */}
       <section style={{ background: P.crimson, position: "relative", overflow: "hidden", padding: "100px 0" }}>
 
@@ -486,7 +618,7 @@ export default function Liberia() {
               <div style={{ height: "1px", width: "36px", background: P.amber }} />
             </div>
             <h2 style={{
-              fontSize: "clamp(2rem, 3.5vw, 2.8rem)", fontWeight: 800,
+              fontSize: "clamp(1.8rem, 3.5vw, 2.8rem)", fontWeight: 800,
               color: "#fff", lineHeight: 1.1, letterSpacing: "-0.025em", margin: "0 0 16px",
             }}>
               History &{" "}
@@ -507,42 +639,43 @@ export default function Liberia() {
 
           {/* Timeline */}
           <div style={{ position: "relative" }}>
-            <div style={{
-              position: "absolute", left: "50%", top: 0, bottom: 0,
-              width: "1px", background: "rgba(255,255,255,0.12)",
-              transform: "translateX(-50%)",
-            }} />
+            <div className="lib-tl-center-line" />
+            <div className="lib-tl-mobile-rail" />
 
             <div style={{ display: "flex", flexDirection: "column" }}>
               {timelineEvents.map((ev, i) => {
                 const isLeft = i % 2 === 0;
                 const accent = i % 3 === 0 ? P.gold : i % 3 === 1 ? P.amber : "rgba(255,255,255,0.7)";
+
+                const card = (
+                  <div style={{
+                    background: "rgba(255,255,255,0.06)",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    borderLeft: `3px solid ${accent}`,
+                    borderRadius: "2px",
+                    padding: "18px 22px",
+                    marginBottom: "16px",
+                    textAlign: "left",
+                  }}>
+                    <div style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "2.5px", textTransform: "uppercase", color: P.amber, marginBottom: "6px" }}>{ev.year}</div>
+                    <h3 style={{ fontSize: "0.95rem", fontWeight: 800, color: "#fff", margin: "0 0 8px", letterSpacing: "-0.01em" }}>{ev.title}</h3>
+                    <p style={{ fontSize: "0.88rem", color: "rgba(255,255,255,0.62)", lineHeight: 1.8, margin: 0 }}>{ev.body}</p>
+                  </div>
+                );
+
                 return (
                   <motion.div
                     key={i}
                     {...fadeUp(i * 0.05)}
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "1fr 48px 1fr",
-                      marginBottom: "8px",
-                    }}
+                    className="lib-tl-entry"
                   >
-                    <div style={{ padding: isLeft ? "0 32px 0 0" : "0" }}>
-                      {isLeft && (
-                        <div style={{
-                          background: "rgba(255,255,255,0.06)",
-                          border: "1px solid rgba(255,255,255,0.1)",
-                          borderLeft: `3px solid ${accent}`,
-                          borderRadius: "2px", padding: "18px 22px",
-                        }}>
-                          <div style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "2.5px", textTransform: "uppercase", color: P.amber, marginBottom: "6px" }}>{ev.year}</div>
-                          <h3 style={{ fontSize: "0.95rem", fontWeight: 800, color: "#fff", margin: "0 0 8px", letterSpacing: "-0.01em" }}>{ev.title}</h3>
-                          <p style={{ fontSize: "0.88rem", color: "rgba(255,255,255,0.62)", lineHeight: 1.8, margin: 0 }}>{ev.body}</p>
-                        </div>
-                      )}
+                    {/* Left slot */}
+                    <div className="lib-tl-left" style={{ minWidth: 0 }}>
+                      {isLeft && card}
                     </div>
 
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-start", paddingTop: "22px" }}>
+                    {/* Center dot (desktop only) */}
+                    <div className="lib-tl-dot-col">
                       <div style={{
                         width: "14px", height: "14px", borderRadius: "50%",
                         background: accent,
@@ -552,19 +685,9 @@ export default function Liberia() {
                       }} />
                     </div>
 
-                    <div style={{ padding: !isLeft ? "0 0 0 32px" : "0" }}>
-                      {!isLeft && (
-                        <div style={{
-                          background: "rgba(255,255,255,0.06)",
-                          border: "1px solid rgba(255,255,255,0.1)",
-                          borderLeft: `3px solid ${accent}`,
-                          borderRadius: "2px", padding: "18px 22px",
-                        }}>
-                          <div style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "2.5px", textTransform: "uppercase", color: P.amber, marginBottom: "6px" }}>{ev.year}</div>
-                          <h3 style={{ fontSize: "0.95rem", fontWeight: 800, color: "#fff", margin: "0 0 8px", letterSpacing: "-0.01em" }}>{ev.title}</h3>
-                          <p style={{ fontSize: "0.88rem", color: "rgba(255,255,255,0.62)", lineHeight: 1.8, margin: 0 }}>{ev.body}</p>
-                        </div>
-                      )}
+                    {/* Right slot */}
+                    <div className="lib-tl-right" style={{ minWidth: 0 }}>
+                      {!isLeft && card}
                     </div>
                   </motion.div>
                 );
@@ -620,7 +743,7 @@ export default function Liberia() {
               </div>
 
               <h2 style={{
-                fontSize: "clamp(1.9rem, 3vw, 2.6rem)", fontWeight: 800,
+                fontSize: "clamp(1.8rem, 3vw, 2.6rem)", fontWeight: 800,
                 color: P.ink, lineHeight: 1.2, letterSpacing: "-0.025em", margin: "0 0 16px",
               }}>
                 Education as the{" "}
@@ -631,12 +754,12 @@ export default function Liberia() {
 
               <div style={{ height: "3px", width: "52px", borderRadius: "2px", background: `linear-gradient(to right, ${P.gold}, ${P.amber})`, marginBottom: "24px" }} />
 
-              <p style={{ color: "rgba(26,10,0,0.6)", fontSize: "clamp(0.95rem, 1.2vw, 1.05rem)", lineHeight: 1.85, margin: "0 0 16px" }}>
+              <p style={{ color: "rgba(26,10,0,0.6)", fontSize: "clamp(0.92rem, 1.2vw, 1.05rem)", lineHeight: 1.85, margin: "0 0 16px" }}>
                 Liberia has one of the world's highest illiteracy rates. Two civil wars, an
                 Ebola outbreak, and entrenched poverty have left millions of children without
                 access to consistent, quality education.
               </p>
-              <p style={{ color: "rgba(26,10,0,0.6)", fontSize: "clamp(0.95rem, 1.2vw, 1.05rem)", lineHeight: 1.85, margin: "0 0 16px" }}>
+              <p style={{ color: "rgba(26,10,0,0.6)", fontSize: "clamp(0.92rem, 1.2vw, 1.05rem)", lineHeight: 1.85, margin: "0 0 16px" }}>
                 It is precisely this reality that brought African Dream Academy to Paynesville,
                 Monrovia in 2012. ADA believes education is the most powerful tool to break the
                 cycle — giving every child a tuition-free, world-class education and a future
@@ -673,7 +796,8 @@ export default function Liberia() {
           initial={{ opacity: 0 }} animate={{ opacity: 1 }}
           style={{
             position: "fixed", inset: 0, background: "rgba(26,10,0,0.94)",
-            display: "flex", alignItems: "center", justifyContent: "center", zIndex: 9999,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            zIndex: 9999, padding: "1rem",
           }}
         >
           <motion.div
@@ -684,22 +808,24 @@ export default function Liberia() {
               padding: "4px",
               background: `linear-gradient(135deg, ${P.gold}, ${P.crimson})`,
               borderRadius: "3px",
+              maxWidth: "calc(100vw - 2rem)",
             }}
           >
             <img
               src={activeImg} alt="Liberia"
-              style={{ maxHeight: "85vh", maxWidth: "88vw", objectFit: "contain", display: "block", borderRadius: "1px" }}
+              style={{ maxHeight: "80vh", maxWidth: "100%", objectFit: "contain", display: "block", borderRadius: "1px" }}
             />
           </motion.div>
           <button
             onClick={() => setActiveImg(null)}
             style={{
-              position: "absolute", top: "24px", right: "28px",
+              position: "absolute", top: "16px", right: "16px",
               background: "none", border: `1px solid rgba(240,180,41,0.4)`,
               borderRadius: "50%", width: "44px", height: "44px",
               color: P.gold, fontSize: "24px", cursor: "pointer",
               display: "flex", alignItems: "center", justifyContent: "center",
               transition: "border-color 0.2s, color 0.2s",
+              touchAction: "manipulation",
             }}
             onMouseEnter={e => { e.currentTarget.style.borderColor = P.gold; e.currentTarget.style.color = "#fff"; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(240,180,41,0.4)"; e.currentTarget.style.color = P.gold; }}
