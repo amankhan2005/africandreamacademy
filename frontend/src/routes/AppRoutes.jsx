@@ -1,6 +1,7 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
-import RouteScrollTop from "../components/RouteScrollTop"; 
+import RouteScrollTop from "../components/RouteScrollTop";
+import Chatbot from "../components/chatbot";  
 
 /* Pages */
 import Home from "../pages/Home";
@@ -30,12 +31,12 @@ export default function AppRoutes() {
         v7_relativeSplatPath: true,
       }}
     >
-       <RouteScrollTop />
+      <RouteScrollTop />
+
+      <Chatbot />  
 
       <Routes>
-
         <Route element={<MainLayout />}>
-
           <Route path="/" element={<Home />} />
 
           {/* Academy */}
@@ -53,11 +54,9 @@ export default function AppRoutes() {
           <Route path="/foundation/impact" element={<Impact />} />
           <Route path="/foundation/board" element={<Board />} />
           <Route path="/foundation/contact" element={<Contact />} />
-
         </Route>
 
         <Route path="*" element={<NotFound />} />
-
       </Routes>
     </BrowserRouter>
   );

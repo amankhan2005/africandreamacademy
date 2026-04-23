@@ -196,7 +196,7 @@ export default function VideoSection() {
               fontSize: "clamp(2rem, 3.5vw, 2.75rem)",
               fontWeight: 800,
               color: P.ink,
-              lineHeight: 1.1,
+              lineHeight: 1.3,
               letterSpacing: "-0.025em",
               margin: "0 0 18px 0",
             }}
